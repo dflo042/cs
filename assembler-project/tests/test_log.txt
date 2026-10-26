@@ -1,0 +1,42 @@
+== 1 assemble fizzbuzz.asm
+assembled 45 instructions and 19 data bytes
+wrote tests/out/fizzbuzz.mhc-ascii and tests/out/fizzbuzz.mhc-bin
+PASS assembled fizzbuzz.asm
+PASS fizzbuzz.mhc-bin matches the file in the repo
+PASS fizzbuzz.mhc-ascii matches the file in the repo
+== 2 the ascii file is the bin file written as text
+PASS ascii words equal bin words
+== 3 disassemble both formats
+wrote tests/out/from_bin.asm
+PASS disassembled the bin file
+wrote tests/out/from_ascii.asm
+PASS disassembled the ascii file
+PASS both formats give the same program
+PASS matches fizzbuzz_rebuilt.asm in the repo
+== 4 reassemble the rebuilt program and compare bytes
+PASS rebuilt program assembles
+PASS rebuilt bin bytes identical to the original
+PASS rebuilt ascii identical to the original
+== 5 part 1 instructions
+PASS part1.asm assembles
+PASS part 1 words match my hand assembly
+== 6 bad assembly input gives an error
+PASS bad_instruction.asm rejected. error line 3 unsupported instruction mul in mul $t1, $t0, $t0
+PASS bad_register.asm rejected. error line 3 unknown register $t9x
+PASS bad_label.asm rejected. error line 3 label nowhere is not defined anywhere
+PASS bad_immediate.asm rejected. error line 2 immediate 40000 does not fit in 16 signed bits
+PASS bad_operands.asm rejected. error line 2 add needs 3 operands but got 2
+PASS bad_data.asm rejected. error line 2 .asciiz needs a string in double quotes
+== 7 bad machine code input gives an error
+PASS cutoff.mhc-bin rejected. error tests/cutoff.mhc-bin has 25 bytes which is not a multiple of 4. The file is cut off or damaged
+PASS wrong_count.mhc-bin rejected. error tests/wrong_count.mhc-bin header says 2 text words and 0 data bytes but the file holds 1 words after the header
+PASS short_line.mhc-ascii rejected. error tests/short_line.mhc-ascii line 7 has 31 characters. Every line must have exactly 32 zeros and ones
+PASS bad_char.mhc-ascii rejected. error tests/bad_char.mhc-ascii line 7 has a character that is not 0 or 1
+PASS not_mhc.mhc-ascii rejected. error tests/not_mhc.mhc-ascii line 1 has 30 characters. Every line must have exactly 32 zeros and ones
+PASS unknown_opcode.mhc-ascii rejected. error unsupported opcode 0x3f in word 0xfc000000 at 0x00400000
+== 8 cross check with MARS
+PASS text words equal the MARS dump
+PASS original and rebuilt print the same thing in MARS
+PASS rebuilt output is the correct FizzBuzz 1 to 100
+
+28 passed 0 failed
